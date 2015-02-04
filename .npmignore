@@ -1,0 +1,8 @@
+*.tgz
+.editorconfig
+.gitignore
+.jscsrc
+.jshintrc
+.npmignore
+coverage
+test
