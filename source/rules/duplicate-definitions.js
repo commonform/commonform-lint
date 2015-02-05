@@ -1,3 +1,3 @@
-var noDuplicates = require('../no-duplicates');
-
-module.exports = noDuplicates.bind(this, 'term', 'definitions');
+module.exports = require('../no-duplicates').bind(
+  this, 'term', 'definitions'
+);

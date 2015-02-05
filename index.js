@@ -3,10 +3,12 @@ var valid = require('commonform-validate');
 var rules = {
   'No Duplicate Definitions':
     require('./source/rules/duplicate-definitions'),
+  'No Duplicate Summaries':
+    require('./source/rules/duplicate-summaries'),
   'No Undefined Terms':
     require('./source/rules/undefined-terms'),
-  'No Duplicate Summaries':
-    require('./source/rules/duplicate-summaries')
+  'No Broken References':
+    require('./source/rules/broken-references')
 };
 
 var precomputeNamespaces =
