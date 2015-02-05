@@ -1,17 +1,26 @@
 var validate = require('commonform-validate');
 
+var pushToKeyList = function(result, type, key, path) {
+  var set = result[type];
+  if (set.hasOwnProperty(key)) {
+    set[key].push(path);
+  } else {
+    set[key] = [path];
+  }
+};
+
 var namespaces = function recurse(form, result, path) {
-  var definitions = result.definitions;
   form.content.forEach(function(element, index) {
     var newPath;
+    var term;
     if (validate.definition(element)) {
       newPath = path.concat('content', index);
-      var term = element.definition;
-      if (definitions.hasOwnProperty(term)) {
-        definitions[term].push(newPath);
-      } else {
-        definitions[term] = [newPath];
-      }
+      term = element.definition;
+      pushToKeyList(result, 'definitions', term, newPath);
+    } else if (validate.use(element)) {
+      newPath = path.concat('content', index);
+      term = element.use;
+      pushToKeyList(result, 'uses', term, newPath);
     } else if (validate.nestedSubForm(element)) {
       newPath = path.concat('content', index, 'form');
       recurse(element.form, result, newPath);
@@ -22,7 +31,8 @@ var namespaces = function recurse(form, result, path) {
 
 module.exports = function(project) {
   var empty = {
-    definitions: {}
+    definitions: {},
+    uses: {}
   };
   return namespaces(project.form, empty, []);
 };
