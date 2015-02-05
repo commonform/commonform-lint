@@ -96,4 +96,58 @@ describe('namespaces precomputation', function() {
         });
     });
   });
+
+  describe('of sub-form summaries', function() {
+    it('produces an object', function() {
+      expect(precompute(testProject(['test'])).summaries)
+        .to.be.an('object');
+    });
+
+    it('reports summaries used', function() {
+      expect(precompute(testProject([
+        {
+          summary: 'Indemnity',
+          form: {content:['test']}
+        }
+      ])).summaries)
+        .to.eql({Indemnity: [['content', 0]]});
+    });
+
+    it('reports nested summaries', function() {
+      expect(precompute(testProject([
+        {
+          form: {
+            content: [
+              {
+                summary: 'Indemnity',
+                form: {content:['test']}
+              }
+            ]
+          }
+        }
+      ])).summaries)
+        .to.eql({
+          Indemnity: [['content', 0, 'form', 'content', 0]]
+        });
+    });
+
+    it('reports multiple paths for >1', function() {
+      expect(precompute(testProject([
+        {
+          summary: 'Indemnity',
+          form: {content:['test']}
+        },
+        {
+          summary: 'Indemnity',
+          form: {content:['test']}
+        }
+      ])).summaries)
+        .to.eql({
+          Indemnity: [
+            ['content', 0],
+            ['content', 1]
+          ]
+        });
+    });
+  });
 });
