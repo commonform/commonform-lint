@@ -3,7 +3,7 @@ module.exports = function(project, precomputed) {
   return Object.keys(definitions)
     .reduce(function(errors, term) {
       var paths = definitions[term];
-      if (paths.length > 0) {
+      if (paths.length > 1) {
         return errors.concat({
           info: {term: term},
           paths: paths

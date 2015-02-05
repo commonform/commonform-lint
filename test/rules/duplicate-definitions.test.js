@@ -15,6 +15,14 @@ var testProject = function(content) {
 };
 
 describe('no duplicate definitions rule', function() {
+  it('ignores terms defined only once', function() {
+    expect(lint(testProject([
+      {definition: 'Agreement'},
+      {definition: 'Consideration'}
+    ])))
+      .to.eql([]);
+  });
+
   it('reports more than one definitions of a term', function() {
     expect(lint(testProject([
       {definition: 'Agreement'},
