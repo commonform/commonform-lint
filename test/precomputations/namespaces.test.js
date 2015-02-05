@@ -150,4 +150,46 @@ describe('namespaces precomputation', function() {
         });
     });
   });
+
+  describe('of references', function() {
+    it('produces an object', function() {
+      expect(precompute(testProject(['test'])).references)
+        .to.be.an('object');
+    });
+
+    it('reports references made', function() {
+      expect(precompute(testProject([
+        {reference: 'Indemnity'}
+      ])).references)
+        .to.eql({Indemnity: [['content', 0]]});
+    });
+
+    it('reports nested references', function() {
+      expect(precompute(testProject([
+        {
+          form: {
+            content: [
+              {reference: 'Indemnity'}
+            ]
+          }
+        }
+      ])).references)
+        .to.eql({
+          Indemnity: [['content', 0, 'form', 'content', 0]]
+        });
+    });
+
+    it('reports multiple references', function() {
+      expect(precompute(testProject([
+        {reference: 'Indemnity'},
+        {reference: 'Indemnity'}
+      ])).references)
+        .to.eql({
+          Indemnity: [
+            ['content', 0],
+            ['content', 1]
+          ]
+        });
+    });
+  });
 });

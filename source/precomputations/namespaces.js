@@ -12,15 +12,19 @@ var pushToKeyList = function(result, type, key, path) {
 var namespaces = function recurse(form, result, path) {
   form.content.forEach(function(element, index) {
     var elementPath;
-    var term;
+    var target;
     if (validate.definition(element)) {
       elementPath = path.concat('content', index);
-      term = element.definition;
-      pushToKeyList(result, 'definitions', term, elementPath);
+      target = element.definition;
+      pushToKeyList(result, 'definitions', target, elementPath);
     } else if (validate.use(element)) {
       elementPath = path.concat('content', index);
-      term = element.use;
-      pushToKeyList(result, 'uses', term, elementPath);
+      target = element.use;
+      pushToKeyList(result, 'uses', target, elementPath);
+    } else if (validate.reference(element)) {
+      elementPath = path.concat('content', index);
+      target = element.reference;
+      pushToKeyList(result, 'references', target, elementPath);
     } else if (validate.nestedSubForm(element)) {
       elementPath = path.concat('content', index);
       if (element.hasOwnProperty('summary')) {
@@ -38,7 +42,8 @@ module.exports = function(project) {
   var empty = {
     definitions: {},
     uses: {},
-    summaries: {}
+    summaries: {},
+    references: {}
   };
   return namespaces(project.form, empty, []);
 };
