@@ -2,7 +2,9 @@ var valid = require('commonform-validate');
 
 var rules = {
   'No Duplicate Definitions':
-    require('./source/rules/duplicate-definitions')
+    require('./source/rules/duplicate-definitions'),
+  'No Undefined Terms':
+    require('./source/rules/undefined-terms')
 };
 
 var precomputeNamespaces =
