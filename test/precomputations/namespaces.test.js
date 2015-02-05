@@ -1,6 +1,6 @@
 /* jshint mocha: true */
 var expect = require('chai').expect;
-var precompute = require('../../source/precomputations/definitions');
+var precompute = require('../../source/precomputations/namespaces');
 
 var testProject = function(content, values) {
   return {
@@ -12,7 +12,7 @@ var testProject = function(content, values) {
   };
 };
 
-describe('definitions precomputation', function() {
+describe('namespaces precomputation', function() {
   it('is a function', function() {
     expect(precompute)
       .to.be.a('function');
@@ -26,7 +26,7 @@ describe('definitions precomputation', function() {
   it('reports term definitions', function() {
     expect(precompute(testProject([
       {definition: 'Agreement'}
-    ])))
+    ])).definitions)
       .to.eql({Agreement: [['content', 0]]});
   });
 
@@ -34,7 +34,7 @@ describe('definitions precomputation', function() {
     expect(precompute(testProject([
       {definition: 'Agreement'},
       {form: {content: [{definition: 'Termination'}]}}
-    ])))
+    ])).definitions)
       .to.eql({
         Agreement: [['content', 0]],
         Termination: [['content', 1, 'form', 'content', 0]]
@@ -45,7 +45,7 @@ describe('definitions precomputation', function() {
     expect(precompute(testProject([
       {definition: 'Agreement'},
       {definition: 'Agreement'}
-    ])))
+    ])).definitions)
       .to.eql({
         Agreement: [
           ['content', 0],

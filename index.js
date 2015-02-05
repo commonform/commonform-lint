@@ -5,8 +5,8 @@ var rules = {
     require('./source/rules/duplicate-definitions')
 };
 
-var precomputeDefinitions =
-  require('./source/precomputations/definitions');
+var precomputeNamespaces =
+  require('./source/precomputations/namespaces');
 
 module.exports = function(project) {
   if (!valid.project(project)) {
@@ -33,9 +33,7 @@ module.exports = function(project) {
   } else {
     // Precompute certain useful data structures describing the project.
     var precomputed = {
-      namespaces: {
-        definitions: precomputeDefinitions(project)
-      }
+      namespaces: precomputeNamespaces(project)
     };
 
     // Apply each rule to the project, concatenating errors.
