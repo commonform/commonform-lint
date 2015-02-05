@@ -1,5 +1,5 @@
-module.exports = function(singular, plural, project, precomputed) {
-  var hash = precomputed.namespaces[plural];
+module.exports = function(singular, plural, project, analysis) {
+  var hash = analysis[plural];
   return Object.keys(hash)
     .reduce(function(errors, key) {
       var paths = hash[key];

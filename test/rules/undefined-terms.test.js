@@ -7,7 +7,7 @@ var testProject = function(content) {
     commonform: '0.0.0',
     metadata: {title: 'Test'},
     preferences: {
-      lint: {'No Undefined Terms': 'true'}
+      lint: {only:['No Undefined Terms']}
     },
     values: {},
     form: {content: content}

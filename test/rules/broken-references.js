@@ -7,7 +7,7 @@ var testProject = function(content) {
     commonform: '0.0.0',
     metadata: {title: 'Test'},
     preferences: {
-      lint: {'No Broken References': 'true'}
+      lint: {only: ['No Broken References']}
     },
     values: {},
     form: {content: content}

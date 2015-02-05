@@ -7,7 +7,7 @@ var testProject = function(content) {
     commonform: '0.0.0',
     metadata: {title: 'Test'},
     preferences: {
-      lint: {'No Duplicate Definitions': 'true'}
+      lint: {only: ['No Duplicate Definitions']}
     },
     values: {},
     form: {content: content}

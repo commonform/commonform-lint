@@ -1,6 +1,6 @@
-module.exports = function(from, to, by, project, precomputed) {
-  var referenceMap = precomputed.namespaces[from];
-  var targetMap = precomputed.namespaces[to];
+module.exports = function(from, to, by, project, analysis) {
+  var referenceMap = analysis[from];
+  var targetMap = analysis[to];
   return Object.keys(referenceMap)
     .reduce(function(errors, key) {
       var paths = referenceMap[key];
