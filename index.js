@@ -4,7 +4,9 @@ var rules = {
   'No Duplicate Definitions':
     require('./source/rules/duplicate-definitions'),
   'No Undefined Terms':
-    require('./source/rules/undefined-terms')
+    require('./source/rules/undefined-terms'),
+  'No Duplicate Summaries':
+    require('./source/rules/duplicate-summaries')
 };
 
 var precomputeNamespaces =

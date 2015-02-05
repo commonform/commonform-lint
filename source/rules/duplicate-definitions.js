@@ -1,15 +1,3 @@
-module.exports = function(project, precomputed) {
-  var definitions = precomputed.namespaces.definitions;
-  return Object.keys(definitions)
-    .reduce(function(errors, term) {
-      var paths = definitions[term];
-      if (paths.length > 1) {
-        return errors.concat({
-          info: {term: term},
-          paths: paths
-        });
-      } else {
-        return errors;
-      }
-    }, []);
-};
+var noDuplicates = require('../no-duplicates');
+
+module.exports = noDuplicates.bind(this, 'term', 'definitions');
