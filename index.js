@@ -50,3 +50,5 @@ module.exports = function(project) {
     }, []);
   }
 };
+
+module.exports.version = '0.0.1';
