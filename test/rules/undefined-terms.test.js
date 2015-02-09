@@ -15,7 +15,7 @@ var testProject = function(content) {
 };
 
 describe('no undefined terms', function() {
-  it('repoorts the use of an undefined term', function() {
+  it('reports the use of an undefined term', function() {
     expect(lint(testProject([{use: 'Agreement'}])))
       .to.eql([{
         rule: 'No Undefined Terms',
@@ -26,7 +26,7 @@ describe('no undefined terms', function() {
       }]);
   });
 
-  it('repoorts multiple uses of an undefined term', function() {
+  it('reports multiple uses of an undefined term', function() {
     expect(lint(testProject([
       {use: 'Agreement'},
       {use: 'Agreement'}

@@ -15,7 +15,7 @@ var testProject = function(content) {
 };
 
 describe('no broken references', function() {
-  it('repoorts reference to an unused summary', function() {
+  it('reports reference to an unused summary', function() {
     expect(lint(testProject([{reference: 'Indemnity'}])))
       .to.eql([{
         rule: 'No Broken References',
@@ -26,7 +26,7 @@ describe('no broken references', function() {
       }]);
   });
 
-  it('repoorts multiple references to an unused summary', function() {
+  it('reports multiple references to an unused summary', function() {
     expect(lint(testProject([
       {reference: 'Indemnity'},
       {reference: 'Indemnity'}
