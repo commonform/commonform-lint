@@ -62,4 +62,4 @@ module.exports = function(project) {
   }
 };
 
-module.exports.version = '0.1.0';
+module.exports.version = '0.2.0';
