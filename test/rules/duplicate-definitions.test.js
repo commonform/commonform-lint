@@ -31,7 +31,8 @@ describe('no duplicate definitions rule', function() {
     ])))
       .to.include({
         rule: 'No Duplicate Definitions',
-        info: {term: 'Agreement'},
+        message: 'The term "Agreement" is defined more than once.',
+        object: {term: 'Agreement'},
         paths: [
           ['content', 0],
           ['content', 1]

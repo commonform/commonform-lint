@@ -1,4 +1,4 @@
-module.exports = function(from, to, by, project, analysis) {
+module.exports = function(from, to, by, fmt, project, analysis) {
   var referenceMap = analysis[from];
   var targetMap = analysis[to];
   return Object.keys(referenceMap)
@@ -6,10 +6,11 @@ module.exports = function(from, to, by, project, analysis) {
       var paths = referenceMap[key];
       if (!targetMap.hasOwnProperty(key)) {
         var error = {
-          info: {},
+          object: {},
+          message: fmt.replace('%s', key),
           paths: paths
         };
-        error.info[by] = key;
+        error.object[by] = key;
         return errors.concat(error);
       } else {
         return errors;

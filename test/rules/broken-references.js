@@ -14,12 +14,15 @@ var testProject = function(content) {
   };
 };
 
+var message = 'The summary "Indemnity" is referenced, but never used.';
+
 describe('no broken references', function() {
   it('reports reference to an unused summary', function() {
     expect(lint(testProject([{reference: 'Indemnity'}])))
       .to.eql([{
         rule: 'No Broken References',
-        info: {summary: 'Indemnity'},
+        message: message,
+        object: {summary: 'Indemnity'},
         paths: [
           ['content', 0]
         ]
@@ -33,7 +36,8 @@ describe('no broken references', function() {
     ])))
       .to.eql([{
         rule: 'No Broken References',
-        info: {summary: 'Indemnity'},
+        message: message,
+        object: {summary: 'Indemnity'},
         paths: [
           ['content', 0],
           ['content', 1]

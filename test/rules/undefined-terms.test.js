@@ -19,7 +19,8 @@ describe('no undefined terms', function() {
     expect(lint(testProject([{use: 'Agreement'}])))
       .to.eql([{
         rule: 'No Undefined Terms',
-        info: {term: 'Agreement'},
+        message: 'The term "Agreement" is used, but not defined.',
+        object: {term: 'Agreement'},
         paths: [
           ['content', 0]
         ]
@@ -33,7 +34,8 @@ describe('no undefined terms', function() {
     ])))
       .to.eql([{
         rule: 'No Undefined Terms',
-        info: {term: 'Agreement'},
+        message: 'The term "Agreement" is used, but not defined.',
+        object: {term: 'Agreement'},
         paths: [
           ['content', 0],
           ['content', 1]
