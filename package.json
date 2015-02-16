@@ -1,10 +1,12 @@
 {
+  "name": "commonform-lint",
+  "description": "find technical and stylistic errors in Common Form projects",
+  "version": "0.1.0",
   "author": {
     "name": "Kyle E. Mitchell",
     "email": "kyle@kemitchell.com",
     "url": "http://kemitchell.com/"
   },
-  "description": "find technical and stylistic errors in Common Form projects",
   "dependencies": {
     "commonform-analyze": "0.1.x",
     "commonform-validate": "0.1.x"
@@ -28,7 +30,6 @@
   ],
   "license": "Apache-2.0",
   "main": "source/index",
-  "name": "commonform-lint",
   "repository": {
     "type": "git",
     "url": "https://github.com/commonform/commonform-lint.git"
@@ -40,6 +41,5 @@
     "pre-commit": "npm run lint && npm run check && npm run coverage",
     "test": "mocha",
     "travis-ci": "npm run pre-commit"
-  },
-  "version": "0.1.0"
+  }
 }
