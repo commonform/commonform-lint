@@ -1,19 +1,20 @@
-module.exports = function(from, to, by, fmt, project, analysis) {
-  var referenceMap = analysis[from];
-  var targetMap = analysis[to];
-  return Object.keys(referenceMap)
-    .reduce(function(errors, key) {
-      var paths = referenceMap[key];
-      if (!targetMap.hasOwnProperty(key)) {
-        var error = {
-          object: {},
-          message: fmt.replace('%s', key),
+var Immutable = require('immutable');
+
+module.exports =
+  function(from, to, by, messageFormat, form, values, analysis) {
+    var referenceMap = analysis.get(from);
+    var targetMap = analysis.get(to);
+    return referenceMap.reduce(function(errors, paths, key) {
+      if (!targetMap.has(key)) {
+        var error = Immutable.Map({
+          object: Immutable.Map(),
+          message: messageFormat.replace('%s', key),
           paths: paths
-        };
-        error.object[by] = key;
-        return errors.concat(error);
+        })
+          .setIn(['object', by], key);
+        return errors.push(error);
       } else {
         return errors;
       }
-    }, []);
-};
+    }, Immutable.List());
+  };

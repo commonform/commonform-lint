@@ -8,8 +8,8 @@
     "url": "http://kemitchell.com/"
   },
   "dependencies": {
-    "commonform-analyze": "0.1.x",
-    "commonform-validate": "0.1.x"
+    "commonform-analyze": "^0.2.0",
+    "immutable": "^3.6.2"
   },
   "devDependencies": {
     "chai": "^1.10.0",
@@ -17,8 +17,7 @@
     "istanbul": "^0.3.5",
     "jscs": "^1.8.1",
     "jshint": "^2.5.10",
-    "mocha": "^2.0.1",
-    "util-merge": "^1.0.0"
+    "mocha": "^2.0.1"
   },
   "homepage": "https://github.com/commonform/commonform-lint",
   "keywords": [

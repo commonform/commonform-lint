@@ -1,24 +1,24 @@
 /* jshint mocha: true */
+var Immutable = require('immutable');
 var expect = require('chai').expect;
 var lint = require('../..');
 
-var testProject = function(content) {
-  return {
-    commonform: '0.0.0',
-    metadata: {title: 'Test'},
-    preferences: {
-      lint: {only: ['No Broken References']}
-    },
-    values: {},
-    form: {content: content}
-  };
-};
-
 var message = 'The summary "Indemnity" is referenced, but never used.';
+var emptyMap = Immutable.Map();
+var noValues = emptyMap;
+var preferences = Immutable.fromJS({
+  only: ['No Broken References']
+});
 
 describe('no broken references', function() {
   it('reports reference to an unused summary', function() {
-    expect(lint(testProject([{reference: 'Indemnity'}])))
+    expect(lint(
+      Immutable.fromJS({
+        content: [{reference: 'Indemnity'}]
+      }),
+      noValues,
+      preferences
+    ).toJS())
       .to.eql([{
         rule: 'No Broken References',
         message: message,
@@ -30,10 +30,16 @@ describe('no broken references', function() {
   });
 
   it('reports multiple references to an unused summary', function() {
-    expect(lint(testProject([
-      {reference: 'Indemnity'},
-      {reference: 'Indemnity'}
-    ])))
+    expect(lint(
+      Immutable.fromJS({
+        content: [
+          {reference: 'Indemnity'},
+          {reference: 'Indemnity'}
+        ]
+      }),
+      noValues,
+      preferences
+    ).toJS())
       .to.eql([{
         rule: 'No Broken References',
         message: message,

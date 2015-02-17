@@ -1,7 +1,7 @@
+var Immutable = require('immutable');
 var analyze = require('commonform-analyze');
-var validate = require('commonform-validate');
 
-var rules = {
+var availableRules = Immutable.Map({
   'No Duplicate Definitions':
     require('./rules/duplicate-definitions'),
   'No Duplicate Summaries':
@@ -10,55 +10,51 @@ var rules = {
     require('./rules/undefined-terms'),
   'No Broken References':
     require('./rules/broken-references')
-};
+});
 
 var unknownRuleError = function(name) {
   return new Error('Unknown rule, "' + name + '"');
 };
 
-module.exports = function(project) {
-  if (!validate.project(project)) {
-    throw new Error('Invalid project');
-  }
+var emptyList = Immutable.List();
 
-  var prefs = project.preferences.lint || {};
+module.exports = function(form, values, preferences) {
   var rulesToApply;
 
-  if (prefs.hasOwnProperty('only')) {
-    rulesToApply = prefs.only.map(function(name) {
-      if (rules.hasOwnProperty(name)) {
-        return {
+  if (preferences.has('only')) {
+    rulesToApply = preferences.get('only').map(function(name) {
+      if (availableRules.has(name)) {
+        return Immutable.Map({
           name: name,
-          errorsIn: rules[name]
-        };
+          ruleFunction: availableRules.get(name)
+        });
       } else {
         throw unknownRuleError(name);
       }
     });
   } else {
-    rulesToApply = Object.keys(rules).map(function(name) {
-      return {
+    rulesToApply = availableRules.map(function(check, name) {
+      return Immutable.Map({
         name: name,
-        errorsIn: rules[name]
-      };
+        ruleFunction: check
+      });
     });
   }
 
-  if (rulesToApply.length < 1) {
-    return [];
+  if (rulesToApply.count() < 1) {
+    return emptyList;
   } else {
-    var analysis = analyze(project);
+    var analysis = analyze(form);
 
     // Apply each rule to the project, concatenating errors.
     return rulesToApply.reduce(function(errors, rule) {
       return errors.concat(
-        rule.errorsIn(project, analysis)
+        rule.get('ruleFunction')(form, values, analysis)
           .map(function(error) {
-            error.rule = rule.name;
-            return error;
+            return error.set('rule', rule.get('name'));
           })
       );
-    }, []);
+    }, emptyList);
   }
 };
 

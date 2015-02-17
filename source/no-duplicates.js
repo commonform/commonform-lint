@@ -1,18 +1,19 @@
-module.exports = function(singular, plural, fmt, project, analysis) {
-  var hash = analysis[plural];
-  return Object.keys(hash)
-    .reduce(function(errors, key) {
-      var paths = hash[key];
-      if (paths.length > 1) {
-        var error = {
-          object: {},
-          message: fmt.replace('%s', key),
+var Immutable = require('immutable');
+
+module.exports =
+  function(singular, plural, messageFormat, form, values, analysis) {
+    var hash = analysis.get(plural);
+    return hash.reduce(function(errors, paths, key) {
+      if (paths.count() > 1) {
+        var error = Immutable.Map({
+          object: Immutable.Map(),
+          message: messageFormat.replace('%s', key),
           paths: paths
-        };
-        error.object[singular] = key;
-        return errors.concat(error);
+        })
+          .setIn(['object', singular], key);
+        return errors.push(error);
       } else {
         return errors;
       }
-    }, []);
-};
+    }, Immutable.List());
+  };

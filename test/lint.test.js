@@ -1,17 +1,12 @@
 /* jshint mocha: true */
+var Immutable = require('immutable');
 var expect = require('chai').expect;
-var merge = require('util-merge');
 var lint = require('..');
 
-var validForm = {content: ['test']};
-
-var validProject = {
-  commonform: '0.0.1',
-  metadata: {title: 'Test'},
-  values: {},
-  preferences: {},
-  form: validForm
-};
+var validForm = Immutable.fromJS({content: ['test']});
+var emptyMap = Immutable.Map();
+var noPreferences = emptyMap;
+var noValues = emptyMap;
 
 describe('lint', function() {
   it('is a function', function() {
@@ -19,52 +14,47 @@ describe('lint', function() {
       .to.be.a('function');
   });
 
-  it('throws an error for an invalid project', function() {
-    expect(function() {
-      lint({});
-    })
-      .to.throw('Invalid project');
-  });
-
   it('returns no errors when all rules are disabled', function() {
-    expect(lint(merge(validProject, {
-      preferences: {
-        lint: {only: []}
-      }
-    })))
+    expect(lint(
+      validForm,
+      noValues,
+      Immutable.fromJS({only: []})
+    ).toJS())
       .to.eql([]);
   });
 
   it('returns no errors for a clean project', function() {
-    expect(lint(merge(validProject, {
-      form: {
+    expect(lint(
+      Immutable.fromJS({
         content: [
           {summary: 'Summary', form: validForm},
           {reference: 'Summary'},
           {definition: 'Term'},
           {use: 'Term'}
         ]
-      }
-    })).length)
+      }),
+      noValues,
+      noPreferences
+   ).count())
       .to.equal(0);
   });
 
   describe('rule selection', function() {
     it('throw an error for unknown rule in .only', function() {
       expect(function() {
-        lint(merge(validProject, {
-          preferences: {
-            lint: {only: ['Fake Rule']}
-          }
-        }));
+        lint(
+          validForm,
+          noValues,
+          Immutable.Map({only: ['Fake Rule']})
+        );
       })
         .to.throw('Unknown rule, "Fake Rule"');
     });
 
     describe('without preferences', function() {
       it('applies all rules', function() {
-        expect(lint(merge(validProject, {
-          form: {
+        expect(lint(
+          Immutable.fromJS({
             content: [
               {reference: 'Nonexistent'},
               {use: 'Nonexistent'},
@@ -73,8 +63,10 @@ describe('lint', function() {
               {summary: 'Twice', form: validForm},
               {summary: 'Twice', form: validForm},
             ]
-          }
-        })).length)
+          }),
+          noValues,
+          noPreferences
+        ).count())
           .to.equal(4);
       });
     });
