@@ -1,53 +1,34 @@
 /* jshint mocha: true */
-var Immutable = require('immutable');
 var expect = require('chai').expect;
 var lint = require('../..');
 
-var message = 'The summary "Indemnity" is referenced, but never used.';
-var emptyMap = Immutable.Map();
-var noValues = emptyMap;
-var preferences = Immutable.fromJS({
-  only: ['No Broken References']
-});
+var message = 'The heading "Indemnity" is referenced, but never used.';
+var preferences = {only: ['No Broken References']};
 
 describe('no broken references', function() {
-  it('reports reference to an unused summary', function() {
-    expect(lint(
-      Immutable.fromJS({
-        content: [{reference: 'Indemnity'}]
-      }),
-      noValues,
-      preferences
-    ).toJS())
+  it('reports reference to an unused heading', function() {
+    var form = {content: [{reference: 'Indemnity'}]};
+    expect(lint(form, {}, preferences))
       .to.eql([{
         rule: 'No Broken References',
         message: message,
-        object: {summary: 'Indemnity'},
+        object: {heading: 'Indemnity'},
         paths: [
-          ['content', 0]
-        ]
-      }]);
+          ['content', 0]]}]);
   });
 
-  it('reports multiple references to an unused summary', function() {
-    expect(lint(
-      Immutable.fromJS({
-        content: [
-          {reference: 'Indemnity'},
-          {reference: 'Indemnity'}
-        ]
-      }),
-      noValues,
-      preferences
-    ).toJS())
+  it('reports multiple references to an unused heading', function() {
+    var form = {
+      content: [
+        {reference: 'Indemnity'},
+        {reference: 'Indemnity'}]};
+    expect(lint(form, {}, preferences))
       .to.eql([{
         rule: 'No Broken References',
         message: message,
-        object: {summary: 'Indemnity'},
+        object: {heading: 'Indemnity'},
         paths: [
           ['content', 0],
-          ['content', 1]
-        ]
-      }]);
+          ['content', 1]]}]);
   });
 });

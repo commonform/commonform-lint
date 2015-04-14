@@ -1,4 +1,4 @@
 module.exports = require('../missing-target').bind(
-  this, 'references', 'summaries', 'summary',
-  'The summary "%s" is referenced, but never used.'
+  this, 'references', 'headings', 'heading',
+  'The heading "%s" is referenced, but never used.'
 );

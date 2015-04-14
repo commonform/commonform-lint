@@ -8,12 +8,11 @@
     "url": "http://kemitchell.com/"
   },
   "dependencies": {
-    "commonform-analyze": "^0.2.0",
-    "immutable": "^3.6.2"
+    "commonform-analyze": "1.x"
   },
   "devDependencies": {
     "chai": "^1.10.0",
-    "check-versions": "0.0.1",
+    "check-versions": "1.x",
     "istanbul": "^0.3.5",
     "jscs": "^1.8.1",
     "jshint": "^2.5.10",

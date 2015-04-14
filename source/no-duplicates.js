@@ -1,19 +1,17 @@
-var Immutable = require('immutable');
-
 module.exports =
   function(singular, plural, messageFormat, form, values, analysis) {
-    var hash = analysis.get(plural);
-    return hash.reduce(function(errors, paths, key) {
-      if (paths.count() > 1) {
-        var error = Immutable.Map({
-          object: Immutable.Map(),
+    var hash = analysis[plural];
+    return Object.keys(hash).reduce(function(errors, key) {
+      var paths = hash[key];
+      if (paths.length > 1) {
+        var error = {
+          object: {},
           message: messageFormat.replace('%s', key),
           paths: paths
-        })
-          .setIn(['object', singular], key);
-        return errors.push(error);
-      } else {
-        return errors;
+        };
+        error.object[singular] = key;
+        errors.push(error);
       }
-    }, Immutable.List());
+      return errors;
+    }, []);
   };
