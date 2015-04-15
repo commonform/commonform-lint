@@ -1,49 +1,25 @@
 var analyze = require('commonform-analyze');
 
-var availableRules = {
+var rules = {
   'No Duplicate Definitions': require('./rules/duplicate-definitions'),
   'No Duplicate Headings': require('./rules/duplicate-headings'),
   'No Undefined Terms': require('./rules/undefined-terms'),
   'No Broken References': require('./rules/broken-references')
 };
 
-var unknownRuleError = function(name) {
-  return new Error('Unknown rule, "' + name + '"');
-};
-
-module.exports = function(form, values, preferences) {
-  var rulesToApply;
-
-  if (preferences.hasOwnProperty('only')) {
-    rulesToApply = preferences.only.map(function(name) {
-      if (availableRules.hasOwnProperty(name)) {
-        return {name: name, ruleFunction: availableRules[name]};
-      } else {
-        throw unknownRuleError(name);
-      }
-    });
-  } else {
-    rulesToApply = Object.keys(availableRules).map(function(name) {
-      var check = availableRules[name];
-      return {name: name, ruleFunction: check};
-    });
-  }
-
-  if (rulesToApply.length < 1) {
-    return [];
-  } else {
-    var analysis = analyze(form);
-    // Apply each rule to the project, concatenating errors.
-    return rulesToApply.reduce(function(errors, rule) {
+module.exports = function(form) {
+  var analysis = analyze(form);
+  return Object.keys(rules)
+    .reduce(function(errors, name) {
+      var ruleFunction = rules[name];
       return errors.concat(
-        rule.ruleFunction(form, values, analysis)
+        ruleFunction(form, analysis)
           .map(function(error) {
-            error.rule = rule.name;
+            error.rule = name;
             return error;
           })
       );
     }, []);
-  }
 };
 
 module.exports.version = '0.3.0';

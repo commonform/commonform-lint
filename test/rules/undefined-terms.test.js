@@ -2,12 +2,10 @@
 var expect = require('chai').expect;
 var lint = require('../..');
 
-var preferences = {only: ['No Undefined Terms']};
-
 describe('no undefined terms', function() {
   it('reports the use of an undefined term', function() {
     expect(
-      lint({content: [{use: 'Agreement'}]}, {}, preferences))
+      lint({content: [{use: 'Agreement'}]}))
       .to.eql([{
         rule: 'No Undefined Terms',
         message: 'The term "Agreement" is used, but not defined.',
@@ -22,7 +20,7 @@ describe('no undefined terms', function() {
         {use: 'Agreement'},
         {use: 'Agreement'}]};
     expect(
-      lint(form, {}, preferences))
+      lint(form))
       .to.eql([{
         rule: 'No Undefined Terms',
         message: 'The term "Agreement" is used, but not defined.',

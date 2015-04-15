@@ -1,5 +1,5 @@
 module.exports =
-  function(from, to, by, messageFormat, form, values, analysis) {
+  function(from, to, by, messageFormat, form, analysis) {
     var referenceMap = analysis[from];
     var targetMap = analysis[to];
     return Object.keys(referenceMap).reduce(function(errors, key) {

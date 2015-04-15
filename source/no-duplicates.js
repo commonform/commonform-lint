@@ -1,5 +1,5 @@
 module.exports =
-  function(singular, plural, messageFormat, form, values, analysis) {
+  function(singular, plural, messageFormat, form, analysis) {
     var hash = analysis[plural];
     return Object.keys(hash).reduce(function(errors, key) {
       var paths = hash[key];

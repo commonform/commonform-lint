@@ -2,15 +2,13 @@
 var expect = require('chai').expect;
 var lint = require('../..');
 
-var preferences = {only: ['No Duplicate Definitions']};
-
 describe('no duplicate definitions rule', function() {
   it('ignores terms defined only once', function() {
     var form = {
       content: [
         {definition: 'Agreement'},
         {definition: 'Consideration'}]};
-    expect(lint(form, {}, preferences))
+    expect(lint(form))
       .to.eql([]);
   });
 
@@ -21,7 +19,7 @@ describe('no duplicate definitions rule', function() {
         {definition: 'Agreement'},
         {definition: 'Consideration'}]};
     expect(
-      lint(form, {}, preferences))
+      lint(form))
       .to.include({
         rule: 'No Duplicate Definitions',
         message: 'The term "Agreement" is defined more than once.',
