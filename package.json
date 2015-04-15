@@ -1,37 +1,31 @@
 {
   "name": "commonform-lint",
-  "description": "find technical and stylistic errors in Common Form projects",
+  "description": "find technical errors in Common Form projects",
   "version": "0.3.0",
-  "author": {
-    "name": "Kyle E. Mitchell",
-    "email": "kyle@kemitchell.com",
-    "url": "http://kemitchell.com/"
-  },
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "dependencies": {
-    "commonform-analyze": "1.x"
+    "commonform-analyze": "^0.4.0"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "check-versions": "1.x",
+    "chai": "^2.2.0",
+    "check-versions": "^1.0.0",
     "istanbul": "^0.3.5",
     "jscs": "^1.8.1",
     "jshint": "^2.5.10",
     "mocha": "^2.0.1"
   },
-  "homepage": "https://github.com/commonform/commonform-lint",
+  "homepage": "https://commonform.github.io",
   "keywords": [
     "contracts",
     "document assembly",
     "knowledge management",
     "law",
+    "lint",
     "markup"
   ],
   "license": "Apache-2.0",
-  "main": "source/index",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/commonform/commonform-lint.git"
-  },
+  "main": "source/index.js",
+  "repository": "commonform/commonform-lint",
   "scripts": {
     "check": "check-versions --check-module",
     "coverage": "istanbul cover _mocha && istanbul check-coverage coverage/coverage.json",
