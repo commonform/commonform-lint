@@ -2,7 +2,7 @@
 var expect = require('chai').expect;
 var lint = require('../..');
 
-var message = 'The heading "Indemnity" is referenced, but never used.';
+var message = 'The heading "Indemnity" is referenced, but not used.';
 
 describe('no broken references', function() {
   it('reports reference to an unused heading', function() {
