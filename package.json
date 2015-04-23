@@ -3,6 +3,7 @@
   "description": "find technical errors in Common Forms",
   "version": "0.4.1",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
+  "bugs": "https://github.com/commonform/commonform-lint/issues",
   "dependencies": {
     "commonform-analyze": "^0.4.1"
   },
