@@ -9,7 +9,7 @@ describe('lint', function() {
     expect(lint).to.be.a('function');
   });
 
-  it('returns no errors for a clean project', function() {
+  it('returns no errors for a sound form', function() {
     var form = {
       content: [
         {heading: 'Heading', form: validForm},

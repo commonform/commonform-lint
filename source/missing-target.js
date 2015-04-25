@@ -1,17 +1,18 @@
 module.exports =
-  function(from, to, by, messageFormat, form, analysis) {
+  function(from, to, messageFormat, form, analysis) {
     var referenceMap = analysis[from];
     var targetMap = analysis[to];
-    return Object.keys(referenceMap).reduce(function(errors, key) {
-      if (!targetMap.hasOwnProperty(key)) {
-        var error = {
-          object: {},
-          message: messageFormat.replace('%s', key),
-          paths: referenceMap[key]
-        };
-        error.object[by] = key;
-        errors.push(error);
-      }
-      return errors;
-    }, []);
+    return Object.keys(referenceMap)
+      .reduce(function(errors, key) {
+        if (!targetMap.hasOwnProperty(key)) {
+          referenceMap[key]
+            .forEach(function(path) {
+              errors.push({
+                message: messageFormat.replace('%s', key),
+                path: path
+              });
+            });
+        }
+        return errors;
+      }, []);
   };

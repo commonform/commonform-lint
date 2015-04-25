@@ -7,7 +7,9 @@ describe('no duplicate definitions rule', function() {
     var form = {
       content: [
         {definition: 'Agreement'},
-        {definition: 'Consideration'}]};
+        {definition: 'Consideration'}
+      ]
+    };
     expect(lint(form))
       .to.eql([]);
   });
@@ -17,15 +19,24 @@ describe('no duplicate definitions rule', function() {
       content: [
         {definition: 'Agreement'},
         {definition: 'Agreement'},
-        {definition: 'Consideration'}]};
+        {definition: 'Consideration'}
+      ]
+    };
     expect(
       lint(form))
-      .to.include({
-        rule: 'No Duplicate Definitions',
-        message: 'The term "Agreement" is defined more than once.',
-        object: {term: 'Agreement'},
-        paths: [
-          ['content', 0],
-          ['content', 1]]});
+      .to.eql([
+        {
+          message: 'The term "Agreement" is defined more than once.',
+          path: ['content', 0],
+          source: 'commonform-lint',
+          url: null
+        },
+        {
+          message: 'The term "Agreement" is defined more than once.',
+          path: ['content', 1],
+          source: 'commonform-lint',
+          url: null
+        }
+      ]);
   });
 });

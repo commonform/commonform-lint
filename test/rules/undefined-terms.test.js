@@ -7,26 +7,35 @@ describe('no undefined terms', function() {
     expect(
       lint({content: [{use: 'Agreement'}]}))
       .to.eql([{
-        rule: 'No Undefined Terms',
         message: 'The term "Agreement" is used, but not defined.',
-        object: {term: 'Agreement'},
-        paths: [
-          ['content', 0]]}]);
+        path: ['content', 0],
+        source: 'commonform-lint',
+        url: null
+      }]);
   });
 
   it('reports multiple uses of an undefined term', function() {
     var form = {
       content: [
         {use: 'Agreement'},
-        {use: 'Agreement'}]};
+        {use: 'Agreement'}
+      ]
+    };
     expect(
       lint(form))
-      .to.eql([{
-        rule: 'No Undefined Terms',
-        message: 'The term "Agreement" is used, but not defined.',
-        object: {term: 'Agreement'},
-        paths: [
-          ['content', 0],
-          ['content', 1]]}]);
+      .to.eql([
+        {
+          message: 'The term "Agreement" is used, but not defined.',
+          path: ['content', 0],
+          source: 'commonform-lint',
+          url: null
+        },
+        {
+          message: 'The term "Agreement" is used, but not defined.',
+          path: ['content', 1],
+          source: 'commonform-lint',
+          url: null
+        }
+      ]);
   });
 });

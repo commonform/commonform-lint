@@ -9,25 +9,34 @@ describe('no broken references', function() {
     var form = {content: [{reference: 'Indemnity'}]};
     expect(lint(form))
       .to.eql([{
-        rule: 'No Broken References',
         message: message,
-        object: {heading: 'Indemnity'},
-        paths: [
-          ['content', 0]]}]);
+        path: ['content', 0],
+        source: 'commonform-lint',
+        url: null
+      }]);
   });
 
   it('reports multiple references to an unused heading', function() {
     var form = {
       content: [
         {reference: 'Indemnity'},
-        {reference: 'Indemnity'}]};
+        {reference: 'Indemnity'}
+      ]
+    };
     expect(lint(form))
-      .to.eql([{
-        rule: 'No Broken References',
-        message: message,
-        object: {heading: 'Indemnity'},
-        paths: [
-          ['content', 0],
-          ['content', 1]]}]);
+      .to.eql([
+        {
+          message: message,
+          path: ['content', 0],
+          source: 'commonform-lint',
+          url: null
+        },
+        {
+          message: message,
+          path: ['content', 1],
+          source: 'commonform-lint',
+          url: null
+        }
+      ]);
   });
 });

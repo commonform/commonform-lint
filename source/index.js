@@ -1,24 +1,27 @@
 var analyze = require('commonform-analyze');
 
-var rules = {
-  'No Duplicate Definitions': require('./rules/duplicate-definitions'),
-  'No Duplicate Headings': require('./rules/duplicate-headings'),
-  'No Undefined Terms': require('./rules/undefined-terms'),
-  'No Broken References': require('./rules/broken-references')
-};
+var name = require('../package.json').name;
+
+var rules = [
+  require('./rules/broken-references'),
+  require('./rules/duplicate-definitions'),
+  require('./rules/duplicate-headings'),
+  require('./rules/undefined-terms')
+];
 
 module.exports = function(form) {
   var analysis = analyze(form);
-  return Object.keys(rules)
-    .reduce(function(errors, name) {
-      var ruleFunction = rules[name];
-      return errors.concat(
-        ruleFunction(form, analysis)
-          .map(function(error) {
-            error.rule = name;
-            return error;
-          })
-      );
+  return rules
+    .reduce(function(annotations, rule) {
+      return annotations
+        .concat(
+          rule(form, analysis)
+            .map(function(annotation) {
+              annotation.source = name;
+              annotation.url = null;
+              return annotation;
+            })
+        );
     }, []);
 };
 
