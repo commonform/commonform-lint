@@ -25,4 +25,4 @@ module.exports = function(form) {
     }, []);
 };
 
-module.exports.version = '0.4.1';
+module.exports.version = '0.5.0';
