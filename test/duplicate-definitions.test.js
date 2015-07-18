@@ -5,7 +5,9 @@ require('tape')('no duplicate definitions rule', function(test) {
     lint({
       content: [
         {definition: 'Agreement'},
-        {definition: 'Consideration'}]}),
+        {definition: 'Consideration'},
+        {use: 'Agreement'},
+        {use: 'Consideration'}]}),
     [],
     'ignores terms defined only once');
 
@@ -14,7 +16,9 @@ require('tape')('no duplicate definitions rule', function(test) {
       content: [
         {definition: 'Agreement'},
         {definition: 'Agreement'},
-        {definition: 'Consideration'}]}),
+        {definition: 'Consideration'},
+        {use: 'Agreement'},
+        {use: 'Consideration'}]}),
     [
       {
         message: 'The term "Agreement" is defined more than once.',
