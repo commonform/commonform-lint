@@ -8,10 +8,8 @@
     "commonform-analyze": "~0.4.1"
   },
   "devDependencies": {
-    "covert": "~1.1.0",
-    "jscs": "~1.13.1",
-    "jshint": "~2.8.0",
-    "tape": "~4.0.0"
+    "defence-cli": "~1.0.1",
+    "replace-require-self": "~1.0.0"
   },
   "homepage": "https://commonform.github.io",
   "keywords": [
@@ -23,16 +21,12 @@
     "markup"
   ],
   "license": "Apache-2.0",
-  "main": "source/index.js",
   "peerDependencies": {
     "commonform": "1.x",
     "commonform-annotations": "1.x"
   },
   "repository": "commonform/commonform-lint",
   "scripts": {
-    "coverage": "covert test/*.test.js",
-    "lint": "jshint source test && jscs source test",
-    "precommit": "npm run lint && npm run coverage",
-    "test": "tape test/*.test.js"
+    "test": "defence README.md | replace-require-self | node"
   }
 }
