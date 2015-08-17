@@ -1,7 +1,13 @@
 ```javascript
 var lint = require('commonform-lint')
 var assert = require('assert')
+```
 
+`lint` takes a [Common Form](https://npmjs.com/packages/commonform-validate) argument and returns an array of [Common Form Annotations](https://npmjs.com/packages/commonform-annotations).
+
+# Broken Cross-References
+
+```javascript
 var message = 'The heading "Indemnity" is referenced, but not used.'
 
 assert.deepEqual(
@@ -26,17 +32,13 @@ assert.deepEqual(
       source: 'commonform-lint',
       url: null } ],
   'notes multiple broken references')
+```
 
-assert.deepEqual(
-  lint({
-    content: [
-      { definition: 'Agreement' },
-      { definition: 'Consideration' },
-      { use: 'Agreement' },
-      { use: 'Consideration' } ] }),
-  [ ],
-  'ignores terms defined once')
+# Defined Terms
 
+## Conflicting Definitions
+
+```javascript
 assert.deepEqual(
   lint({
     content: [
@@ -54,7 +56,11 @@ assert.deepEqual(
       source: 'commonform-lint',
       url: null } ],
   'notes multiple definitions of the same term')
+```
 
+## Undefined Terms
+
+```javascript
 assert.deepEqual(
   lint({ content: [ { use: 'Agreement' } ] }),
   [ { message: 'The term "Agreement" is used, but not defined.',
@@ -74,7 +80,11 @@ assert.deepEqual(
       source: 'commonform-lint',
       url: null } ],
   'notes multiple uses of an undefined term')
+```
 
+## Extra Definitions
+
+```javascript
 assert.deepEqual(
   lint({ content: [ { definition: 'Agreement' } ] }),
   [ { message: 'The term "Agreement" is defined, but not used.',
@@ -82,16 +92,27 @@ assert.deepEqual(
       source: 'commonform-lint',
       url: null } ],
   'notes use of an unused definition')
+```
 
-assert.equal(
+# Structurally Sound Forms
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      { definition: 'Agreement' },
+      { definition: 'Consideration' },
+      { use: 'Agreement' },
+      { use: 'Consideration' } ] }),
+  [ ])
+
+assert.deepEqual(
   lint({
     content: [
       { heading: 'Heading',
         form: { content: [ 'test' ] } },
       { reference: 'Heading' },
       { definition: 'Term' },
-      { use: 'Term' } ] })
-    .length,
-  0,
-  'returns no annotations for a sound form')
+      { use: 'Term' } ] }),
+  [ ])
 ```
