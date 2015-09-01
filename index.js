@@ -21,4 +21,4 @@ module.exports = function(form) {
                 annotation.source = name
                 annotation.url = null
                 return annotation })) },
-      []) }
+      [ ]) }
