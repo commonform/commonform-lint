@@ -1,5 +1,5 @@
 module.exports =
-  function(plural, messageFormat, form, analysis) {
+  function(plural, messageFormat, level, form, analysis) {
     var hash = analysis[plural]
     return Object.keys(hash)
       .reduce(function(errors, key) {
@@ -8,6 +8,7 @@ module.exports =
           paths
             .forEach(function(path) {
               errors.push({
+                level: level,
                 message: messageFormat.replace('%s', key),
                 path: path
               })

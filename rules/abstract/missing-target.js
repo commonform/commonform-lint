@@ -1,5 +1,5 @@
 module.exports =
-  function(from, to, messageFormat, form, analysis) {
+  function(from, to, messageFormat, level, form, analysis) {
     var referenceMap = analysis[from]
     var targetMap = analysis[to]
     return Object.keys(referenceMap)
@@ -9,6 +9,7 @@ module.exports =
             .forEach(function(path) {
               errors.push({
                 message: messageFormat.replace('%s', key),
+                level: level,
                 path: path
               })
             })
