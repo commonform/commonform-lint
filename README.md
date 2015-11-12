@@ -45,10 +45,12 @@ assert.deepEqual(
 assert.deepEqual(
   lint({
     content: [
-      { definition: 'Agreement' },
-      { definition: 'Agreement' },
-      { definition: 'Consideration' },
-      { use: 'Agreement' },
+      { definition: 'Agreement' }, ' ',
+      { definition: 'Agreement' }, ' ',
+      { definition: 'Consideration' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Consideration' }, ' ',
       { use: 'Consideration' } ] }),
   [ { message: 'The term "Agreement" is defined more than once.',
       level: 'error',
@@ -57,7 +59,7 @@ assert.deepEqual(
       url: null },
     { message: 'The term "Agreement" is defined more than once.',
       level: 'error',
-      path: [ 'content', 1 ],
+      path: [ 'content', 2 ],
       source: 'commonform-lint',
       url: null } ],
   'notes multiple definitions of the same term')
@@ -103,15 +105,33 @@ assert.deepEqual(
   'notes use of an unused definition')
 ```
 
+## Terms Used Only Once
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      { use: 'Agreement' }, ' ',
+      { definition: 'Agreement' } ] }),
+  [ { message: 'The defined term "Agreement" is used only once.',
+      level: 'info',
+      path: [ 'content', 0 ],
+      source: 'commonform-lint',
+      url: null } ],
+  'notes single use of defined term')
+```
+
 # Structurally Sound Forms
 
 ```javascript
 assert.deepEqual(
   lint({
     content: [
-      { definition: 'Agreement' },
-      { definition: 'Consideration' },
-      { use: 'Agreement' },
+      { definition: 'Agreement' }, ' ',
+      { definition: 'Consideration' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Consideration' }, ' ',
       { use: 'Consideration' } ] }),
   [ ])
 
@@ -120,8 +140,9 @@ assert.deepEqual(
     content: [
       { heading: 'Heading',
         form: { content: [ 'test' ] } },
-      { reference: 'Heading' },
-      { definition: 'Term' },
+      { reference: 'Heading' }, ' ',
+      { definition: 'Term' }, ' ',
+      { use: 'Term' }, ' ',
       { use: 'Term' } ] }),
   [ ])
 ```
