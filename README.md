@@ -5,7 +5,9 @@ var assert = require('assert')
 
 `lint` takes a [Common Form](https://npmjs.com/packages/commonform-validate) argument and returns an array of [Common Form Annotations](https://npmjs.com/packages/commonform-annotations).
 
-# Broken Cross-References
+# Cross-References
+
+## Broken References
 
 ```javascript
 var message = 'The heading "Indemnity" is referenced, but not used.'
@@ -18,6 +20,44 @@ assert.deepEqual(
       source: 'commonform-lint',
       url: null } ],
   'returns commonform-annotation noting broken reference')
+
+assert.deepEqual(
+  lint({
+    content: [
+      { reference: 'Indemnity' },
+      { reference: 'Indemnity' } ] }),
+  [ { message: message,
+      level: 'error',
+      path: [ 'content', 0 ],
+      source: 'commonform-lint',
+      url: null },
+    { message: message,
+      level: 'error',
+      path: [ 'content', 1 ],
+      source: 'commonform-lint',
+      url: null } ],
+  'notes multiple broken references')
+```
+
+## Ambiguous References
+
+```javascript
+var message = 'Reference to "Indemnity" is ambiguous.'
+
+assert.deepEqual(
+  lint({
+    content: [
+      { heading: 'Indemnity',
+        form: { content: [ 'A' ] } },
+      { heading: 'Indemnity',
+        form: { content: [ 'A' ] } },
+      { reference: 'Indemnity' } ] }),
+  [ { message: message,
+      level: 'error',
+      path: [ 'content', 2 ],
+      source: 'commonform-lint',
+      url: null } ],
+  'returns commonform-annotation noting ambiguous reference')
 
 assert.deepEqual(
   lint({
