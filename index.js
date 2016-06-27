@@ -1,7 +1,5 @@
 var analyze = require('commonform-analyze')
 
-var name = require('./package.json').name
-
 var rules = [
   require('./rules/specific/broken-references'),
   require('./rules/specific/duplicate-definitions'),
@@ -19,7 +17,7 @@ module.exports = function(form) {
           .concat(
             rule(form, analysis)
               .map(function(annotation) {
-                annotation.source = name
+                annotation.source = 'commonform-lint'
                 annotation.url = null
                 return annotation })) },
       [ ]) }
