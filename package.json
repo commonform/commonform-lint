@@ -1,7 +1,7 @@
 {
   "name": "commonform-lint",
   "description": "find technical errors in Common Forms",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "dependencies": {
     "commonform-analyze": "~0.4.1"
