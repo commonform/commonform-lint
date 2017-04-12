@@ -288,6 +288,53 @@ assert.deepEqual(
 )
 ```
 
+## Overlapping Definitions
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      {
+        form: {
+          content: [
+            'Defines the term ', {definition: 'Company'}, '.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Defines the term ', {definition: 'Company Personnel'}, '.'
+          ],
+        }
+      },
+      {
+        form: {content: ['Uses ', {use: 'Company'}, '.']}
+      },
+      {
+        form: {content: ['Uses ', {use: 'Company'}, '.']}
+      },
+      {
+        form: {content: ['Uses ', {use: 'Company Personnel'}, '.']}
+      },
+      {
+        form: {content: ['Uses ', {use: 'Company Personnel'}, '.']}
+      }
+    ]
+  }),
+  [
+    {
+      message: 'The term "Company Personnel" contains the term "Company".',
+      level: 'info',
+      path: ['content', 1, 'form', 'content', 1],
+      source: 'commonform-lint',
+      url: null
+    }
+  ],
+  'notes that one defined term contains another'
+)
+```
+
 # Structurally Sound Forms
 
 ```javascript
