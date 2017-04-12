@@ -6,7 +6,8 @@ var rules = [
   require('./rules/specific/duplicate-headings'),
   require('./rules/specific/undefined-terms'),
   require('./rules/specific/unused-terms'),
-  require('./rules/specific/terms-used-once')
+  require('./rules/specific/terms-used-once'),
+  require('./rules/specific/unmarked-terms')
 ]
 
 module.exports = function (form) {

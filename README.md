@@ -201,3 +201,91 @@ assert.deepEqual(
   []
 )
 ```
+
+# Unmarked Defined Terms
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      {
+        form: {
+          content: [
+            'Defines the term ', {definition: 'Agreement'}, '.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Uses the term ', {use: 'Agreement'}, '.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Uses the term ', {use: 'Agreement'}, ' again.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Uses the term Agreement without marking.'
+          ],
+        }
+      }
+    ]
+  }),
+  [
+    {
+      message: 'The term "Agreement" is used, but not marked as a defined term.',
+      level: 'info',
+      path: ['content', 3, 'form', 'content', 0],
+      source: 'commonform-lint',
+      url: null
+    }
+  ],
+  'notes unmarked use of defined term'
+)
+```
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      {
+        form: {
+          content: [
+            'Defines the term ', {definition: 'Apple'}, '.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Uses the term ', {use: 'Apple'}, '.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Uses the term ', {use: 'Apple'}, ' again.'
+          ],
+        }
+      },
+      {
+        form: {
+          content: [
+            'Uses Applesauce, which is not a defined term.'
+          ],
+        }
+      }
+    ]
+  }),
+  [],
+  'does not note unmarked use of defined term within a longer word'
+)
+```
