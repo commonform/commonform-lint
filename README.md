@@ -289,3 +289,34 @@ assert.deepEqual(
   'does not note unmarked use of defined term within a longer word'
 )
 ```
+
+# Unmarked References
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      {
+        heading: 'Preamble',
+        form: {content: ['This is a preamble.']}
+      },
+      {
+        form: {content: ['Nothing important gets said in Preamble.']}
+      }
+    ]
+  }),
+  [
+    {
+      message: (
+        'The heading "Preamble" is used, ' +
+        'but not marked as a reference.'
+      ),
+      level: 'info',
+      path: ['content', 1, 'form', 'content', 0],
+      source: 'commonform-lint',
+      url: null
+    }
+  ],
+  'notes unmarked reference'
+)
+```
