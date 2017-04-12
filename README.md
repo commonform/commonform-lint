@@ -5,7 +5,9 @@ var assert = require('assert')
 
 `lint` takes a [Common Form](https://npmjs.com/packages/commonform-validate) argument and returns an array of [Common Form Annotations](https://npmjs.com/packages/commonform-annotations).
 
-# Broken Cross-References
+# Cross-Reference Problems
+
+## Broken Cross-References
 
 ```javascript
 var message = 'The heading "Indemnity" is referenced, but not used.'
@@ -51,7 +53,37 @@ assert.deepEqual(
 )
 ```
 
-# Defined Terms
+## Unmarked Cross-References
+
+```javascript
+assert.deepEqual(
+  lint({
+    content: [
+      {
+        heading: 'Preamble',
+        form: {content: ['This is a preamble.']}
+      },
+      {
+        form: {content: ['Nothing important gets said in Preamble.']}
+      }
+    ]
+  }),
+  [
+    {
+      message: (
+        'The heading "Preamble" is used, ' +
+        'but not marked as a reference.'
+      ),
+      level: 'info',
+      path: ['content', 1, 'form', 'content', 0],
+      source: 'commonform-lint',
+      url: null
+    }
+  ],
+  'notes unmarked reference'
+)
+```
+# Defined-Term Problems
 
 ## Conflicting Definitions
 
@@ -168,41 +200,7 @@ assert.deepEqual(
 )
 ```
 
-# Structurally Sound Forms
-
-```javascript
-assert.deepEqual(
-  lint({
-    content: [
-      {definition: 'Agreement'}, ' ',
-      {definition: 'Consideration'}, ' ',
-      {use: 'Agreement'}, ' ',
-      {use: 'Agreement'}, ' ',
-      {use: 'Consideration'}, ' ',
-      {use: 'Consideration'}
-    ]
-  }),
-  []
-)
-
-assert.deepEqual(
-  lint({
-    content: [
-      {
-        heading: 'Heading',
-        form: {content: ['test']}
-      },
-      {reference: 'Heading'}, ' ',
-      {definition: 'Term'}, ' ',
-      {use: 'Term'}, ' ',
-      {use: 'Term'}
-    ]
-  }),
-  []
-)
-```
-
-# Unmarked Defined Terms
+## Unmarked Defined-Term Uses
 
 ```javascript
 assert.deepEqual(
@@ -290,33 +288,36 @@ assert.deepEqual(
 )
 ```
 
-# Unmarked References
+# Structurally Sound Forms
 
 ```javascript
 assert.deepEqual(
   lint({
     content: [
-      {
-        heading: 'Preamble',
-        form: {content: ['This is a preamble.']}
-      },
-      {
-        form: {content: ['Nothing important gets said in Preamble.']}
-      }
+      {definition: 'Agreement'}, ' ',
+      {definition: 'Consideration'}, ' ',
+      {use: 'Agreement'}, ' ',
+      {use: 'Agreement'}, ' ',
+      {use: 'Consideration'}, ' ',
+      {use: 'Consideration'}
     ]
   }),
-  [
-    {
-      message: (
-        'The heading "Preamble" is used, ' +
-        'but not marked as a reference.'
-      ),
-      level: 'info',
-      path: ['content', 1, 'form', 'content', 0],
-      source: 'commonform-lint',
-      url: null
-    }
-  ],
-  'notes unmarked reference'
+  []
+)
+
+assert.deepEqual(
+  lint({
+    content: [
+      {
+        heading: 'Heading',
+        form: {content: ['test']}
+      },
+      {reference: 'Heading'}, ' ',
+      {definition: 'Term'}, ' ',
+      {use: 'Term'}, ' ',
+      {use: 'Term'}
+    ]
+  }),
+  []
 )
 ```
