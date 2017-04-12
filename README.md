@@ -302,7 +302,7 @@ assert.deepEqual(
       {use: 'Consideration'}
     ]
   }),
-  []
+  [/* no annotations */]
 )
 
 assert.deepEqual(
@@ -318,6 +318,6 @@ assert.deepEqual(
       {use: 'Term'}
     ]
   }),
-  []
+  [/* no annotations */]
 )
 ```
