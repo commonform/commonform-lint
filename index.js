@@ -8,8 +8,7 @@ var rules = [
   require('./rules/specific/unused-terms'),
   require('./rules/specific/terms-used-once'),
   require('./rules/specific/unmarked-terms'),
-  require('./rules/specific/unmarked-references'),
-  require('./rules/specific/overlapping-terms')
+  require('./rules/specific/unmarked-references')
 ]
 
 module.exports = function (form) {
