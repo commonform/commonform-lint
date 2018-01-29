@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "dependencies": {
-    "commonform-analyze": "~0.4.1"
+    "commonform-analyze": "^2.0.0"
   },
   "devDependencies": {
     "defence-cli": "^2.0.1",
