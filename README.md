@@ -12,13 +12,13 @@ var assert = require('assert')
 ```javascript
 var message = 'The heading "Indemnity" is referenced, but not used.'
 
-assert.deepEqual(
-  lint({content: [{reference: 'Indemnity'}]}),
+assert.deepStrictEqual(
+  lint({ content: [ { reference: 'Indemnity' } ] }),
   [
     {
       message: message,
       level: 'error',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     }
@@ -26,25 +26,25 @@ assert.deepEqual(
   'returns commonform-annotation noting broken reference'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
-      {reference: 'Indemnity'},
-      {reference: 'Indemnity'}
+      { reference: 'Indemnity' },
+      { reference: 'Indemnity' }
     ]
   }),
   [
     {
       message: message,
       level: 'error',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     },
     {
       message: message,
       level: 'error',
-      path: ['content', 1],
+      path: [ 'content', 1 ],
       source: 'commonform-lint',
       url: null
     }
@@ -56,15 +56,15 @@ assert.deepEqual(
 ## Unmarked Cross-References
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
       {
         heading: 'Preamble',
-        form: {content: ['This is a preamble.']}
+        form: { content: [ 'This is a preamble.' ] }
       },
       {
-        form: {content: ['Nothing important gets said in Preamble.']}
+        form: { content: [ 'Nothing important gets said in Preamble.' ] }
       }
     ]
   }),
@@ -75,7 +75,7 @@ assert.deepEqual(
         'but not marked as a reference.'
       ),
       level: 'info',
-      path: ['content', 1, 'form', 'content', 0],
+      path: [ 'content', 1, 'form', 'content', 0 ],
       source: 'commonform-lint',
       url: null
     }
@@ -88,30 +88,30 @@ assert.deepEqual(
 ## Conflicting Definitions
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
-      {definition: 'Agreement'}, ' ',
-      {definition: 'Agreement'}, ' ',
-      {definition: 'Consideration'}, ' ',
-      {use: 'Agreement'}, ' ',
-      {use: 'Agreement'}, ' ',
-      {use: 'Consideration'}, ' ',
-      {use: 'Consideration'}
+      { definition: 'Agreement' }, ' ',
+      { definition: 'Agreement' }, ' ',
+      { definition: 'Consideration' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Consideration' }, ' ',
+      { use: 'Consideration' }
     ]
   }),
   [
     {
       message: 'The term "Agreement" is defined more than once.',
       level: 'error',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     },
     {
       message: 'The term "Agreement" is defined more than once.',
       level: 'error',
-      path: ['content', 2],
+      path: [ 'content', 2 ],
       source: 'commonform-lint',
       url: null
     }
@@ -123,13 +123,13 @@ assert.deepEqual(
 ## Undefined Terms
 
 ```javascript
-assert.deepEqual(
-  lint({content: [{use: 'Agreement'}]}),
+assert.deepStrictEqual(
+  lint({ content: [ { use: 'Agreement' } ] }),
   [
     {
       message: 'The term "Agreement" is used, but not defined.',
       level: 'error',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     }
@@ -137,20 +137,20 @@ assert.deepEqual(
   'reports the use of an undefined term'
 )
 
-assert.deepEqual(
-  lint({content: [{use: 'Agreement'}, {use: 'Agreement'}]}),
+assert.deepStrictEqual(
+  lint({ content: [ { use: 'Agreement' }, { use: 'Agreement' } ] }),
   [
     {
       message: 'The term "Agreement" is used, but not defined.',
       level: 'error',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     },
     {
       message: 'The term "Agreement" is used, but not defined.',
       level: 'error',
-      path: ['content', 1],
+      path: [ 'content', 1 ],
       source: 'commonform-lint',
       url: null
     }
@@ -162,13 +162,13 @@ assert.deepEqual(
 ## Extra Definitions
 
 ```javascript
-assert.deepEqual(
-  lint({content: [{definition: 'Agreement'}]}),
+assert.deepStrictEqual(
+  lint({ content: [ { definition: 'Agreement' } ] }),
   [
     {
       message: 'The term "Agreement" is defined, but not used.',
       level: 'warn',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     }
@@ -180,18 +180,18 @@ assert.deepEqual(
 ## Terms Used Only Once
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
-      {use: 'Agreement'}, ' ',
-      {definition: 'Agreement'}
+      { use: 'Agreement' }, ' ',
+      { definition: 'Agreement' }
     ]
   }),
   [
     {
       message: 'The defined term "Agreement" is used only once.',
       level: 'info',
-      path: ['content', 0],
+      path: [ 'content', 0 ],
       source: 'commonform-lint',
       url: null
     }
@@ -203,35 +203,35 @@ assert.deepEqual(
 ## Unmarked Defined-Term Uses
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
       {
         form: {
           content: [
-            'Defines the term ', {definition: 'Agreement'}, '.'
-          ],
+            'Defines the term ', { definition: 'Agreement' }, '.'
+          ]
         }
       },
       {
         form: {
           content: [
-            'Uses the term ', {use: 'Agreement'}, '.'
-          ],
+            'Uses the term ', { use: 'Agreement' }, '.'
+          ]
         }
       },
       {
         form: {
           content: [
-            'Uses the term ', {use: 'Agreement'}, ' again.'
-          ],
+            'Uses the term ', { use: 'Agreement' }, ' again.'
+          ]
         }
       },
       {
         form: {
           content: [
             'Uses the term Agreement without marking.'
-          ],
+          ]
         }
       }
     ]
@@ -240,7 +240,7 @@ assert.deepEqual(
     {
       message: 'The term "Agreement" is used, but not marked as a defined term.',
       level: 'info',
-      path: ['content', 3, 'form', 'content', 0],
+      path: [ 'content', 3, 'form', 'content', 0 ],
       source: 'commonform-lint',
       url: null
     }
@@ -250,35 +250,35 @@ assert.deepEqual(
 ```
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
       {
         form: {
           content: [
-            'Defines the term ', {definition: 'Apple'}, '.'
-          ],
+            'Defines the term ', { definition: 'Apple' }, '.'
+          ]
         }
       },
       {
         form: {
           content: [
-            'Uses the term ', {use: 'Apple'}, '.'
-          ],
+            'Uses the term ', { use: 'Apple' }, '.'
+          ]
         }
       },
       {
         form: {
           content: [
-            'Uses the term ', {use: 'Apple'}, ' again.'
-          ],
+            'Uses the term ', { use: 'Apple' }, ' again.'
+          ]
         }
       },
       {
         form: {
           content: [
             'Uses Applesauce, which is not a defined term.'
-          ],
+          ]
         }
       }
     ]
@@ -291,31 +291,31 @@ assert.deepEqual(
 # Structurally Sound Forms
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
-      {definition: 'Agreement'}, ' ',
-      {definition: 'Consideration'}, ' ',
-      {use: 'Agreement'}, ' ',
-      {use: 'Agreement'}, ' ',
-      {use: 'Consideration'}, ' ',
-      {use: 'Consideration'}
+      { definition: 'Agreement' }, ' ',
+      { definition: 'Consideration' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Agreement' }, ' ',
+      { use: 'Consideration' }, ' ',
+      { use: 'Consideration' }
     ]
   }),
   [/* no annotations */]
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   lint({
     content: [
       {
         heading: 'Heading',
-        form: {content: ['test']}
+        form: { content: [ 'test' ] }
       },
-      {reference: 'Heading'}, ' ',
-      {definition: 'Term'}, ' ',
-      {use: 'Term'}, ' ',
-      {use: 'Term'}
+      { reference: 'Heading' }, ' ',
+      { definition: 'Term' }, ' ',
+      { use: 'Term' }, ' ',
+      { use: 'Term' }
     ]
   }),
   [/* no annotations */]
