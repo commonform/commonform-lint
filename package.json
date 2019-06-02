@@ -6,7 +6,8 @@
   "bin": "bin.js",
   "files": [
     "bin.js",
-    "index.js"
+    "index.js",
+    "rules"
   ],
   "dependencies": {
     "commonform-analyze": "^4.0.0"
