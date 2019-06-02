@@ -1,3 +1,7 @@
+# commonform-lint
+
+find technical errors in [Common Forms](https://www.npmjs.com/package/commonform-validate)
+
 ```javascript
 var lint = require('commonform-lint')
 var assert = require('assert')
