@@ -4,6 +4,10 @@
   "version": "3.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "bin": "bin.js",
+  "files": [
+    "bin.js",
+    "index.js"
+  ],
   "dependencies": {
     "commonform-analyze": "^3.0.0"
   },
