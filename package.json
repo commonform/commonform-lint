@@ -10,7 +10,8 @@
     "rules"
   ],
   "dependencies": {
-    "commonform-analyze": "^4.0.0"
+    "commonform-analyze": "^4.0.0",
+    "has": "^1.0.3"
   },
   "devDependencies": {
     "defence-cli": "^3.0.1",

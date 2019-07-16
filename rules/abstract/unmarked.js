@@ -1,3 +1,5 @@
+var has = require('has')
+
 module.exports =
 function (namespace, messageFormat, level, form, analysis) {
   var names = Object.keys(analysis[namespace])
@@ -12,7 +14,7 @@ function (namespace, messageFormat, level, form, analysis) {
 
 function recurse (form, path, messageFormat, names) {
   return form.content.reduce(function (annotations, element, index) {
-    if (element.hasOwnProperty('form')) {
+    if (has(element, 'form')) {
       return annotations.concat(
         recurse(
           element.form,
