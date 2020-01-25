@@ -17,12 +17,12 @@ var assert = require('assert')
 var message = 'The heading "Indemnity" is referenced, but not used.'
 
 assert.deepStrictEqual(
-  lint({ content: [ { reference: 'Indemnity' } ] }),
+  lint({ content: [{ reference: 'Indemnity' }] }),
   [
     {
       message: message,
       level: 'error',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     }
@@ -41,14 +41,14 @@ assert.deepStrictEqual(
     {
       message: message,
       level: 'error',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     },
     {
       message: message,
       level: 'error',
-      path: [ 'content', 1 ],
+      path: ['content', 1],
       source: 'commonform-lint',
       url: null
     }
@@ -65,10 +65,10 @@ assert.deepStrictEqual(
     content: [
       {
         heading: 'Preamble',
-        form: { content: [ 'This is a preamble.' ] }
+        form: { content: ['This is a preamble.'] }
       },
       {
-        form: { content: [ 'Nothing important gets said in Preamble.' ] }
+        form: { content: ['Nothing important gets said in Preamble.'] }
       }
     ]
   }),
@@ -79,7 +79,7 @@ assert.deepStrictEqual(
         'but not marked as a reference.'
       ),
       level: 'info',
-      path: [ 'content', 1, 'form', 'content', 0 ],
+      path: ['content', 1, 'form', 'content', 0],
       source: 'commonform-lint',
       url: null
     }
@@ -108,14 +108,14 @@ assert.deepStrictEqual(
     {
       message: 'The term "Agreement" is defined more than once.',
       level: 'error',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     },
     {
       message: 'The term "Agreement" is defined more than once.',
       level: 'error',
-      path: [ 'content', 2 ],
+      path: ['content', 2],
       source: 'commonform-lint',
       url: null
     }
@@ -128,12 +128,12 @@ assert.deepStrictEqual(
 
 ```javascript
 assert.deepStrictEqual(
-  lint({ content: [ { use: 'Agreement' } ] }),
+  lint({ content: [{ use: 'Agreement' }] }),
   [
     {
       message: 'The term "Agreement" is used, but not defined.',
       level: 'error',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     }
@@ -142,19 +142,19 @@ assert.deepStrictEqual(
 )
 
 assert.deepStrictEqual(
-  lint({ content: [ { use: 'Agreement' }, { use: 'Agreement' } ] }),
+  lint({ content: [{ use: 'Agreement' }, { use: 'Agreement' }] }),
   [
     {
       message: 'The term "Agreement" is used, but not defined.',
       level: 'error',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     },
     {
       message: 'The term "Agreement" is used, but not defined.',
       level: 'error',
-      path: [ 'content', 1 ],
+      path: ['content', 1],
       source: 'commonform-lint',
       url: null
     }
@@ -167,12 +167,12 @@ assert.deepStrictEqual(
 
 ```javascript
 assert.deepStrictEqual(
-  lint({ content: [ { definition: 'Agreement' } ] }),
+  lint({ content: [{ definition: 'Agreement' }] }),
   [
     {
       message: 'The term "Agreement" is defined, but not used.',
       level: 'warn',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     }
@@ -195,7 +195,7 @@ assert.deepStrictEqual(
     {
       message: 'The defined term "Agreement" is used only once.',
       level: 'info',
-      path: [ 'content', 0 ],
+      path: ['content', 0],
       source: 'commonform-lint',
       url: null
     }
@@ -244,7 +244,7 @@ assert.deepStrictEqual(
     {
       message: 'The term "Agreement" is used, but not marked as a defined term.',
       level: 'info',
-      path: [ 'content', 3, 'form', 'content', 0 ],
+      path: ['content', 3, 'form', 'content', 0],
       source: 'commonform-lint',
       url: null
     }
@@ -314,7 +314,7 @@ assert.deepStrictEqual(
     content: [
       {
         heading: 'Heading',
-        form: { content: [ 'test' ] }
+        form: { content: ['test'] }
       },
       { reference: 'Heading' }, ' ',
       { definition: 'Term' }, ' ',
