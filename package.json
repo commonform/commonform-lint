@@ -10,7 +10,7 @@
     "rules"
   ],
   "dependencies": {
-    "commonform-analyze": "^4.0.0",
+    "commonform-analyze": "^5.0.1",
     "has": "^1.0.3"
   },
   "devDependencies": {
