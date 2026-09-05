@@ -1,11 +1,8 @@
-var has = require('has')
-
-module.exports =
-function (namespace, messageFormat, level, form, analysis) {
-  var names = Object.keys(analysis[namespace])
+export default function (namespace, messageFormat, level, form, analysis) {
+  const names = Object.keys(analysis[namespace])
     .map(function (name) {
       return {
-        name: name,
+        name,
         expression: new RegExp('\\b' + name + '\\b')
       }
     })
@@ -14,7 +11,7 @@ function (namespace, messageFormat, level, form, analysis) {
 
 function recurse (form, path, messageFormat, names) {
   return form.content.reduce(function (annotations, element, index) {
-    if (has(element, 'form')) {
+    if (Object.hasOwn(element, 'form')) {
       return annotations.concat(
         recurse(
           element.form,

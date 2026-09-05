@@ -4,20 +4,17 @@
   "version": "5.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "bin": "bin.js",
+  "type": "module",
+  "main": "index.js",
   "files": [
     "bin.js",
-    "index.js",
     "rules"
   ],
   "dependencies": {
-    "commonform-analyze": "^6.0.0",
-    "has": "^1.0.3"
+    "commonform-analyze": "^7.0.1"
   },
   "devDependencies": {
-    "defence-cli": "^3.0.1",
-    "replace-require-self": "^1.1.1",
-    "standard": "^14.3.1",
-    "standard-markdown": "^5.0.1"
+    "defence-cli": "^3.0.1"
   },
   "keywords": [
     "contracts",
@@ -30,7 +27,6 @@
   "license": "BlueOak-1.0.0",
   "repository": "commonform/commonform-lint",
   "scripts": {
-    "lint": "standard && standard-markdown",
-    "test": "defence README.md | replace-require-self | node"
+    "test": "defence README.md | sed \"s!from 'commonform-lint'!from './index.js'!\" | node"
   }
 }

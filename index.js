@@ -1,18 +1,27 @@
-var analyze = require('commonform-analyze')
+import analyze from 'commonform-analyze'
 
-var rules = [
-  require('./rules/specific/broken-references'),
-  require('./rules/specific/duplicate-definitions'),
-  require('./rules/specific/duplicate-headings'),
-  require('./rules/specific/undefined-terms'),
-  require('./rules/specific/unused-terms'),
-  require('./rules/specific/terms-used-once'),
-  require('./rules/specific/unmarked-terms'),
-  require('./rules/specific/unmarked-references')
+import broken from './rules/specific/broken-references.js'
+import dupDef from './rules/specific/duplicate-definitions.js'
+import dupHead from './rules/specific/duplicate-headings.js'
+import undef from './rules/specific/undefined-terms.js'
+import unused from './rules/specific/unused-terms.js'
+import usedOnce from './rules/specific/terms-used-once.js'
+import unmarkedTerms from './rules/specific/unmarked-terms.js'
+import unmarkedReferences from './rules/specific/unmarked-references.js'
+
+const rules = [
+  broken,
+  dupDef,
+  dupHead,
+  undef,
+  unused,
+  usedOnce,
+  unmarkedTerms,
+  unmarkedReferences
 ]
 
-module.exports = function (form) {
-  var analysis = analyze(form)
+export default function (form) {
+  const analysis = analyze(form)
   return rules.reduce(function (annotations, rule) {
     return annotations
       .concat(

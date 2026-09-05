@@ -1,13 +1,11 @@
-var has = require('has')
-
-module.exports = function (form, analysis) {
-  var uses = analysis.uses
-  var definitions = analysis.definitions
+export default function (form, analysis) {
+  const uses = analysis.uses
+  const definitions = analysis.definitions
   return Object.keys(uses).reduce(function (errors, key) {
-    var paths = uses[key]
-    var usedJustOnce = (
+    const paths = uses[key]
+    const usedJustOnce = (
       paths.length === 1 &&
-      has(definitions, key)
+      Object.hasOwn(definitions, key)
     )
     if (usedJustOnce) {
       errors.push({

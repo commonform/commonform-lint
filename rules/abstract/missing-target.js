@@ -1,17 +1,14 @@
-var has = require('has')
-
-module.exports =
-function (from, to, messageFormat, level, form, analysis) {
-  var referenceMap = analysis[from]
-  var targetMap = analysis[to]
+export default function (from, to, messageFormat, level, form, analysis) {
+  const referenceMap = analysis[from]
+  const targetMap = analysis[to]
   return Object.keys(referenceMap).reduce(
     function (errors, key) {
-      if (!has(targetMap, key)) {
+      if (!Object.hasOwn(targetMap, key)) {
         referenceMap[key].forEach(function (path) {
           errors.push({
             message: messageFormat.replace('%s', key),
-            level: level,
-            path: path
+            level,
+            path
           })
         })
       }

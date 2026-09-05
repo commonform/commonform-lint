@@ -3,8 +3,8 @@
 find technical errors in [Common Forms](https://www.npmjs.com/package/commonform-validate)
 
 ```javascript
-var lint = require('commonform-lint')
-var assert = require('assert')
+import lint from 'commonform-lint'
+import assert from 'node:assert'
 ```
 
 `lint` takes a [Common Form](https://npmjs.com/packages/commonform-validate) argument and returns an array of [Common Form Annotations](https://npmjs.com/packages/commonform-annotations).
@@ -14,7 +14,7 @@ var assert = require('assert')
 ## Broken Cross-References
 
 ```javascript
-var message = 'The heading "Indemnity" is referenced, but not used.'
+const message = 'The heading "Indemnity" is referenced, but not used.'
 
 assert.deepStrictEqual(
   lint({ content: [{ reference: 'Indemnity' }] }),
